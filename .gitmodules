@@ -1,0 +1,3 @@
+[submodule "vendors/nodeeditor"]
+	path = vendors/nodeeditor
+	url = https://github.com/phamvienkhanh/nodeeditor.git
