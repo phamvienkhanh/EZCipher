@@ -25,6 +25,12 @@ private:
     Ciphers::AES _aes;
     std::shared_ptr<ByteArray> _data = nullptr;
 
+    QWidget* _view = nullptr;
+    QComboBox* _cbMode = nullptr;
+    QComboBox* _cbKeySize = nullptr;
+    QTextEdit* _txtKey = nullptr;
+    QTextEdit* _txtIV = nullptr;
+
 public:
     NodeAES();
     ~NodeAES();
