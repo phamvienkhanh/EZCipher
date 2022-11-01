@@ -26,6 +26,15 @@ NodeAES::NodeAES()
 
     _cbMode = new QComboBox(_view);
     _cbMode->addItems({"ECB", "CBC", "GCM"});
+    connect(_cbMode, &QComboBox::currentTextChanged, this, [&](const QString& curMode) {
+        if(curMode == Ciphers::Modes::GCM) {
+            portAdded();
+        }
+        else {
+            portRemoved();
+        }
+        
+    });
 
     _cbKeySize = new QComboBox(_view);
     _cbKeySize->addItems({"128", "256"});
@@ -67,7 +76,19 @@ QString NodeAES::name() const
 
 unsigned int NodeAES::nPorts(QtNodes::PortType portType) const
 {
-    return 1;
+    if(portType == QtNodes::PortType::Out)
+        return 1;
+
+    if(portType == QtNodes::PortType::In) {
+        auto curMode = _cbMode->currentText();
+        if(curMode == Ciphers::Modes::GCM) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    return 0;
 }
 
 QtNodes::NodeDataType NodeAES::dataType(QtNodes::PortType portType, QtNodes::PortIndex portIndex) const

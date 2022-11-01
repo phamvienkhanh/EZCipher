@@ -21,6 +21,13 @@ enum Error {
     InvalidKeySize,
 };
 
+namespace Modes
+{
+    static const char* ECB = "ECB";
+    static const char* CBC = "CBC";
+    static const char* GCM = "GCM";
+}
+
 }
 
 #endif
