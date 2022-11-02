@@ -3,28 +3,17 @@
 TextView::TextView()
 {
     _view = new QWidget;
-    _view->setFixedSize({150, 85});
+    _view->setFixedSize({150, 50});
     _view->autoFillBackground();
     QPalette pl;
     pl.setColor(QPalette::ColorRole::Window, Qt::transparent);
     _view->setPalette(pl);
-    
-    _cbTypeView = new QComboBox(_view);
-    _cbTypeView->addItem("Text");
-    _cbTypeView->addItem("Hex");
-    _cbTypeView->addItem("Hex sep");
-    _cbTypeView->addItem("Base64");
-    connect(_cbTypeView, &QComboBox::currentTextChanged, this, [&](const QString&){
-        updateView();
-    });
 
     _txtData = new QTextEdit(_view);
     _txtData->setReadOnly(true);
 
     QVBoxLayout* layout = new QVBoxLayout(_view);
-    layout->addWidget(_cbTypeView);
-    layout->addSpacing(4);
-    layout->addWidget(_txtData, 1);
+    layout->addWidget(_txtData);
 
     _view->setLayout(layout);
 }
@@ -75,31 +64,15 @@ void TextView::setInData(std::shared_ptr<QtNodes::NodeData> nodeData, QtNodes::P
 
 void TextView::updateView()
 {
-    if(_data) {
-        QString dataView;
-        QString curType = _cbTypeView->currentText();
-
-        if (curType == "Text") {
-            dataView = _data->toString();
-        }
-        else if (curType == "Hex") {
-            dataView = _data->toHex();
-        }
-        else if (curType == "Hex sep") {
-            dataView = _data->toHex(' ');
-        }
-        else if (curType == "Base64") {
-            dataView = _data->toBase64();
-        }
-
-        _txtData->setPlainText(dataView);
+    if(_data) {       
+        _txtData->setPlainText(_data->toString());
         _view->adjustSize();
     }
 }
 
 std::shared_ptr<QtNodes::NodeData> TextView::outData(QtNodes::PortIndex port)
 {
-    return nullptr;
+    return _data;
 }
 
 QWidget* TextView::embeddedWidget()

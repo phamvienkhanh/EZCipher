@@ -13,6 +13,8 @@
 #include <QByteArray>
 
 #include <nodes/NodeDataModel>
+
 #include "datatypes/ByteArray.h"
+#include "typedefs.h"
 
 #endif

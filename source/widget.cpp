@@ -8,6 +8,8 @@
 
 #include "components/TextInput.h"
 #include "components/TextView.h"
+#include "components/NodeEncoder.h"
+#include "components/NodeDecoder.h"
 #include "components/NodeCompare.h"
 #include "components/FileInput.h"
 #include "components/NodeAES.h"
@@ -17,7 +19,12 @@ static std::shared_ptr<QtNodes::DataModelRegistry> registerDataModels() {
 
     ret->registerModel<TextInput>("Input");
     ret->registerModel<FileInput>("Input");
+
     ret->registerModel<TextView>("Output");
+
+    ret->registerModel<NodeEncoder>("Converts");
+    ret->registerModel<NodeDecoder>("Converts");
+
     ret->registerModel<NodeCompare>("Compare");
 
     ret->registerModel<NodeAES>("Ciphers");

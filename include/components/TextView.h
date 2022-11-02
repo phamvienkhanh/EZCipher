@@ -30,9 +30,8 @@ public:
 private:
     QWidget* _view = nullptr;
     QTextEdit* _txtData = nullptr;
-    QComboBox* _cbTypeView = nullptr;
 
-    std::shared_ptr<ByteArray> _data = nullptr;
+    SharedPtr<ByteArray> _data = nullptr;
 };
 
 #endif

@@ -25,9 +25,13 @@ set(PROJECT_SOURCES
         main.cpp
         source/widget.cpp include/widget.h
 
+        include/typedefs.h
+
         include/datatypes/ByteArray.h source/datatypes/ByteArray.cpp
         include/components/TextInput.h source/components/TextInput.cpp
         include/components/TextView.h source/components/TextView.cpp
+        include/components/NodeEncoder.h source/components/NodeEncoder.cpp
+        include/components/NodeDecoder.h source/components/NodeDecoder.cpp
         include/components/NodeCompare.h source/components/NodeCompare.cpp
         include/components/FileInput.h source/components/FileInput.cpp
         include/components/NodeAES.h source/components/NodeAES.cpp

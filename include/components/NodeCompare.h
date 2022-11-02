@@ -28,9 +28,9 @@ public:
     ~NodeCompare();
 
 private:
-    std::shared_ptr<ByteArray> _left = nullptr;
-    std::shared_ptr<ByteArray> _right = nullptr;
-    std::shared_ptr<ByteArray> _out = nullptr;
+    SharedPtr<ByteArray> _left = nullptr;
+    SharedPtr<ByteArray> _right = nullptr;
+    SharedPtr<ByteArray> _out = nullptr;
 
     QComboBox* _cbType = nullptr;
 };

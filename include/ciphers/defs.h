@@ -3,7 +3,7 @@
 
 namespace Ciphers {
 
-typedef unsigned char byte;
+using byte = unsigned char;
 
 enum KeySize {
     _128 = 128,

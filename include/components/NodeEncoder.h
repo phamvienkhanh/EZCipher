@@ -1,11 +1,9 @@
-#ifndef _NODES_AES_H_
-#define _NODES_AES_H_
+#ifndef _COMPONENTS_NODE_ENCODER_
+#define _COMPONENTS_NODE_ENCODER_
 
 #include "precompile.h"
 
-#include "ciphers/AES.h"
-
-class NodeAES: public QtNodes::NodeDataModel
+class NodeEncoder: public QtNodes::NodeDataModel
 {
 public:
     bool resizable() const { return true; }
@@ -22,18 +20,18 @@ public:
     QWidget* embeddedWidget() override;
 
 private:
-    Ciphers::AES _aes;
-    SharedPtr<ByteArray> _data = nullptr;
-
-    QWidget* _view = nullptr;
-    QComboBox* _cbMode = nullptr;
-    QComboBox* _cbKeySize = nullptr;
-    QTextEdit* _txtKey = nullptr;
-    QTextEdit* _txtIV = nullptr;
+    void encode();
 
 public:
-    NodeAES();
-    ~NodeAES();
+    NodeEncoder();
+    ~NodeEncoder();
+
+private:
+    QWidget* _view = nullptr;
+    QComboBox* _cbEncode = nullptr;
+
+    SharedPtr<ByteArray> _dataIn = nullptr;
+    SharedPtr<ByteArray> _dataOut = nullptr;
 };
 
 #endif

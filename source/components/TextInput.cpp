@@ -5,19 +5,11 @@ TextInput::TextInput()
     _data = std::make_shared<ByteArray>();
 
     _view = new QWidget;
-    _view->setFixedSize({150, 85});
+    _view->setFixedSize({150, 50});
     _view->autoFillBackground();
     QPalette pl;
     pl.setColor(QPalette::ColorRole::Window, Qt::transparent);
     _view->setPalette(pl);
-
-    _cbType = new QComboBox(_view);
-    _cbType->addItem("Text");
-    _cbType->addItem("Hex");
-    _cbType->addItem("Base64");
-    connect(_cbType, &QComboBox::currentTextChanged, this, [&](const QString&){
-        process();
-    });
 
     _textEdit = new QTextEdit(_view);
     _textEdit->setText("");
@@ -26,9 +18,7 @@ TextInput::TextInput()
     });
 
     QVBoxLayout* layout = new QVBoxLayout(_view);
-    layout->addWidget(_cbType);
-    layout->addSpacing(4);
-    layout->addWidget(_textEdit, 1);
+    layout->addWidget(_textEdit);
 
     _view->setLayout(layout);
 }
@@ -86,16 +76,6 @@ QWidget* TextInput::embeddedWidget()
 
 void TextInput::process()
 {
-    auto curType = _cbType->currentText();
-    if(curType == "Text") {
-        _data->fromString(_textEdit->toPlainText());
-    }
-    else if(curType == "Hex") {
-        _data->fromHex(_textEdit->toPlainText());
-    }
-    else if(curType == "Base64") {
-        _data->fromBase64(_textEdit->toPlainText());
-    }
-    
+    _data->fromString(_textEdit->toPlainText());
     dataUpdated(0);
 }
