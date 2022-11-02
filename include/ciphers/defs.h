@@ -28,6 +28,12 @@ namespace Modes
     static const char* GCM = "GCM";
 }
 
+namespace KeySizes
+{
+    static const char* _128 = "128";
+    static const char* _256 = "256";
+}
+
 }
 
 #endif

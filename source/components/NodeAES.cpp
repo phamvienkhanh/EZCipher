@@ -18,14 +18,14 @@ NodeAES::NodeAES()
     // _data->reset(buff);
 
     _view = new QWidget;
-    _view->setFixedSize({150, 85});
+    _view->setFixedSize({220, 150});
     _view->autoFillBackground();
     QPalette pl;
     pl.setColor(QPalette::ColorRole::Window, Qt::transparent);
     _view->setPalette(pl);
 
     _cbMode = new QComboBox(_view);
-    _cbMode->addItems({"ECB", "CBC", "GCM"});
+    _cbMode->addItems({Ciphers::Modes::ECB, Ciphers::Modes::CBC, Ciphers::Modes::GCM});
     connect(_cbMode, &QComboBox::currentTextChanged, this, [&](const QString& curMode) {
         if(curMode == Ciphers::Modes::GCM) {
             portAdded();
@@ -33,11 +33,13 @@ NodeAES::NodeAES()
         else {
             portRemoved();
         }
-        
     });
 
     _cbKeySize = new QComboBox(_view);
-    _cbKeySize->addItems({"128", "256"});
+    _cbKeySize->addItems({Ciphers::KeySizes::_128, Ciphers::KeySizes::_256});
+
+    _cbIsEncrypt = new QComboBox(_view);
+    _cbIsEncrypt->addItems({"Encrypt", "Decrypt"});
 
     _txtKey = new QTextEdit(_view);
     _txtKey->setPlaceholderText("key");
@@ -45,9 +47,16 @@ NodeAES::NodeAES()
     _txtIV = new QTextEdit(_view);
     _txtIV->setPlaceholderText("IV");
 
+    QWidget* group = new QWidget(_view);
+    QHBoxLayout* hlayout = new QHBoxLayout(_view);
+    hlayout->setContentsMargins(0, 0, 0, 0);
+    hlayout->addWidget(_cbKeySize);
+    hlayout->addWidget(_cbMode);
+    hlayout->addWidget(_cbIsEncrypt);
+    group->setLayout(hlayout);
+
     QVBoxLayout* layout = new QVBoxLayout(_view);
-    layout->addWidget(_cbKeySize);
-    layout->addWidget(_cbMode);
+    layout->addWidget(group);
     layout->addWidget(_txtKey);
     layout->addWidget(_txtIV);
 

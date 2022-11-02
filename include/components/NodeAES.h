@@ -27,6 +27,7 @@ private:
 
     QWidget* _view = nullptr;
     QComboBox* _cbMode = nullptr;
+    QComboBox* _cbIsEncrypt = nullptr;
     QComboBox* _cbKeySize = nullptr;
     QTextEdit* _txtKey = nullptr;
     QTextEdit* _txtIV = nullptr;
