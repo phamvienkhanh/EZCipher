@@ -14,8 +14,11 @@
 #include <QByteArray>
 
 #include <nodes/NodeDataModel>
+#include <nodes/Connection>
+#include <nodes/FlowScene>
 
 #include "datatypes/ByteArray.h"
 #include "typedefs.h"
+#include "scenemgr.h"
 
 #endif

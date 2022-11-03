@@ -26,6 +26,7 @@ set(PROJECT_SOURCES
         source/widget.cpp include/widget.h
 
         include/typedefs.h
+        include/scenemgr.h source/scenemgr.cpp
 
         include/datatypes/ByteArray.h source/datatypes/ByteArray.cpp
         include/components/TextInput.h source/components/TextInput.cpp

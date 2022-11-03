@@ -13,6 +13,7 @@
 #include "components/NodeCompare.h"
 #include "components/FileInput.h"
 #include "components/NodeAES.h"
+#include "scenemgr.h"
 
 static std::shared_ptr<QtNodes::DataModelRegistry> registerDataModels() {
     auto ret = std::make_shared<QtNodes::DataModelRegistry>();
@@ -37,6 +38,9 @@ Widget::Widget(QWidget *parent)
 {
     QVBoxLayout *l = new QVBoxLayout(this);
     auto scene = new QtNodes::FlowScene(registerDataModels(), this);
+    
+    SceneMgr::Inst()->setScene(scene);
+
     l->addWidget(new QtNodes::FlowView(scene));
     l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
