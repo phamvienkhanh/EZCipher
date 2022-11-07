@@ -21,7 +21,7 @@ Error AES::validateParam(const InitParam& param)
         return Error::InvalidIvSize;
     }
 
-    if(param.key.size() != param.key.size()) {
+    if(param.key.size() != param.keySize/8) {
         return Error::InvalidKeySize;
     }
 
@@ -33,8 +33,13 @@ const EVP_CIPHER* AES::getCipher(KeySize keySize, Mode mode)
     return EVP_aes_256_cbc();
 }
 
-bool AES::init(const InitParam& param)
+Error AES::init(const InitParam& param)
 {
+    Error error = validateParam(param);
+    if(error != Error::None) {
+        return error;
+    }
+
     if(_ctx) {
         EVP_CIPHER_CTX_free(_ctx);
         _ctx = nullptr;
@@ -42,7 +47,7 @@ bool AES::init(const InitParam& param)
 
     _ctx = EVP_CIPHER_CTX_new();
     if(!_ctx) {
-        return false;
+        return Error::CreateContextFailed;
     }
 
     int rs = 0;
@@ -50,10 +55,10 @@ bool AES::init(const InitParam& param)
     rs = EVP_CipherInit(_ctx, cipher, (unsigned char*)param.key.data(),
                         (unsigned char*)param.iv.data(), param.isEnc);
     if(rs != 1) {
-        return false;
+        return Error::InitContextFailed;
     }
 
-    return true;
+    return Error::None;
 }
 
 QByteArray AES::update(const QByteArray& data)

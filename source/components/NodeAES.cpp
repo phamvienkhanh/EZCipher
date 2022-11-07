@@ -70,9 +70,28 @@ QString NodeAES::caption() const
     return QString("AES");
 }
 
-QString NodeAES::portCaption(QtNodes::PortType, QtNodes::PortIndex) const
+QString NodeAES::portCaption(QtNodes::PortType portType, QtNodes::PortIndex portIndex) const
 {
-    return QString("");
+    if(portType == QtNodes::PortType::Out)
+        return QString("");
+
+    switch (portIndex)
+    {
+    case 0:
+        return QString("data");
+    
+    case 1:
+        return QString("key");
+
+    case 2:
+        return QString("iv");
+
+    case 3:
+        return QString("aad");
+    
+    default:
+        return QString("");
+    }
 }
 
 QString NodeAES::name() const
@@ -181,12 +200,45 @@ void NodeAES::process()
     param.mode = Ciphers::Mode::CBC;
 
     QByteArray buff;
-    _aes.init(param);
-    buff.append(_aes.update(dataIn));
-    buff.append(_aes.final());
+    Ciphers::Error error = _aes.init(param);
+    if(error != Ciphers::None) {
+        _stateValidate = QtNodes::NodeValidationState::Error;
+
+        if(error == Ciphers::InvalidIvSize) {
+            _mesgValid = QString("invalid IV size");
+        }
+        else if(error == Ciphers::InvalidKeySize) {
+            _mesgValid = QString("invalid key size");
+        }
+        else if(error == Ciphers::CreateContextFailed) {
+            _mesgValid = QString("create context failed");
+        }
+        else if(error == Ciphers::InitContextFailed) {
+            _mesgValid = QString("init context failed");
+        }
+        else {
+            _mesgValid = QString("failed");
+        }
+    }
+    else {
+        _stateValidate = QtNodes::NodeValidationState::Valid;
+        buff.append(_aes.update(dataIn));
+        buff.append(_aes.final());
+    }
+    
     _dataOut->reset(buff);
 
     dataUpdated(0);
+}
+
+QtNodes::NodeValidationState NodeAES::validationState() const
+{
+    return _stateValidate;
+}
+
+QString NodeAES::validationMessage() const
+{
+    return _mesgValid;
 }
 
 QWidget* NodeAES::embeddedWidget()

@@ -23,7 +23,7 @@ public:
     };
 
 public:
-    bool init(const InitParam& param);
+    Error init(const InitParam& param);
     QByteArray update(const QByteArray& data);
     QByteArray final();
 

@@ -19,6 +19,9 @@ enum Error {
     None,
     InvalidIvSize,
     InvalidKeySize,
+
+    CreateContextFailed,
+    InitContextFailed,
 };
 
 namespace Modes

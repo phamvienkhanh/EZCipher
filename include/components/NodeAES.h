@@ -21,6 +21,9 @@ public:
     std::shared_ptr<QtNodes::NodeData> outData(QtNodes::PortIndex port) override;
     QWidget* embeddedWidget() override;
 
+    QtNodes::NodeValidationState validationState() const;
+    QString validationMessage() const;
+
     void inputConnectionCreated(QtNodes::Connection const&);
     void inputConnectionDeleted(QtNodes::Connection const&);
 
@@ -53,6 +56,9 @@ private:
     QTextEdit* _txtIV = nullptr;
 
     QUuid _idConsPortAAD;
+
+    QString _mesgValid;
+    QtNodes::NodeValidationState _stateValidate = QtNodes::NodeValidationState::Valid;
 
 public:
     NodeAES();
