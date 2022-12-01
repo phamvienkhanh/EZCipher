@@ -1,1 +1,3 @@
 # EZCipher
+
+[](./screenshot/screenshot.png)
