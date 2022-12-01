@@ -1,3 +1,3 @@
 # EZCipher
 
-[](./screenshot/screenshot.png)
+![](./screenshot/screenshot.png)
